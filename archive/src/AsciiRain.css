@@ -1,0 +1,19 @@
+.ascii-rain-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -5;
+  background: transparent;
+  will-change: contents;
+}
+
+@media (max-width: 768px) {
+  .ascii-rain canvas {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+  }
+}
