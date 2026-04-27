@@ -1,0 +1,687 @@
+@font-face{
+  font-family: "Antipublic Helvetica";
+  src: url("/Helvetica.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face{
+  font-family: "Antipublic Helvetica";
+  src: url("/Helvetica-Bold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 700;
+}
+
+:root{
+  --main-bg-color:#ffffff;
+  --page-bg: var(--main-bg-color);
+  --page-ink: #111111;
+  --page-accent: #e100ff;
+}
+*{box-sizing:border-box}
+html{
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  touch-action: pan-x pan-y;
+  -webkit-text-size-adjust: 100%;
+}
+html::-webkit-scrollbar{ width:0; height:0; }
+body{
+  background-color:var(--main-bg-color);
+  color:#111;
+  font-family: "Antipublic Helvetica", Helvetica, Arial, sans-serif;
+  font-size: 1.08rem;
+  padding: 30px;
+  margin: 0;
+  overflow-x: hidden;
+  /* Global text glow (stronger antipublic vibe) */
+  text-shadow:
+    0 0 1px rgba(0,0,0,0.35),
+    0 0 18px rgba(0,0,0,0.26),
+    0 0 64px rgba(0,0,0,0.14);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  touch-action: pan-x pan-y;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+body::-webkit-scrollbar{ width:0; height:0; }
+body::-webkit-scrollbar-thumb{ background: transparent; }
+html::-webkit-scrollbar-thumb{ background: transparent; }
+body,
+body *{
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+img,
+a{
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
+/* Selection: disabled */
+::selection{ background: transparent; color: inherit; }
+::-moz-selection{ background: transparent; color: inherit; }
+a{
+  color:#111;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+h1,h2,h3,h4{margin:0}
+hr{border:.5px solid #111}
+
+/* Highlighted text with black background */
+.highlighted-black {
+  background-color: #111111;
+  color: #ffffff;
+  padding: 8px 10px;
+  display: inline;
+  line-height: 1.8;
+}
+
+/* Redacted text - invisible with black background */
+.highlighted-black.redacted {
+  color: transparent !important;
+  text-shadow: none !important;
+}
+
+/* Highlighted text with blue background */
+.highlighted-blue {
+  background-color: #0000ff;
+  color: #ffffff;
+  padding: 8px 10px;
+  display: inline;
+  line-height: 1.8;
+}
+
+/* Redacted text - invisible with background */
+.highlighted-blue.redacted {
+  color: transparent !important;
+  text-shadow: none !important;
+}
+
+/* --- 3D fold/box layout (reconstructed) --- */
+.all{
+  align-items:center;
+  display:flex;
+  height:100vh;
+  justify-content:center;
+  left:0;
+  position:fixed;
+  top:0;
+  width:100%;
+}
+
+.wrapper3d{
+  perspective:20vw;
+  position:relative;
+  transform-style:preserve-3d;
+  z-index: 10;
+}
+
+.fold{
+  height:80vh;
+  width:80vw;
+  overflow:hidden;
+  background: transparent;
+}
+
+.foldTop,
+.foldBottom{
+  left:0;
+  right:0;
+  position:absolute;
+  pointer-events:none;
+}
+
+.foldTop{
+  bottom:100%;
+  transform-origin:bottom center;
+  transform:rotateX(-90deg);
+}
+
+.foldBottom{
+  top:100%;
+  transform-origin:top center;
+  transform:rotateX(90deg);
+}
+
+.foldAlign{
+  height:100%;
+  width:100%;
+}
+.foldBottom .foldAlign{ transform:translateY(-100%); }
+.foldTop .foldAlign{ transform:translateY(100%); }
+#center-fold{ overflow: hidden; }
+#center-content{ will-change: transform; }
+
+.page{
+  max-width: 980px;
+}
+
+.hero{
+  height:88vh;
+  position:relative;
+  margin-bottom: 50px;
+  max-width: 860px;
+  padding: 0 28px;
+  box-sizing: border-box;
+}
+.hero h1{
+  font-family: "Antipublic Helvetica", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  word-spacing: 28px;
+  position:absolute;
+  left:28px;
+  bottom:0;
+  font-size: clamp(3.2rem, 5.6vw, 4.8rem);
+  line-height: 1;
+}
+.hero h1, .hero h1 *{
+  /* remove glow from the large title to avoid cropped shadow */
+  text-shadow: none !important;
+}
+.hero h1 span{
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.tagline{margin:0; font-size: 1.1rem;}
+.linkRow{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 10px 18px;
+}
+section{margin-bottom: 50px}
+section ul{list-style-type:square;margin:10px 0 0;padding:0 1rem}
+section ul li{margin:8px 0 8px -15px}
+ul.tight li{margin-bottom: 10px}
+.smaller{font-size:.9em;opacity:.92}
+.footer{margin: 80px 0 160px; padding-bottom: 120px}
+.article{
+  margin-top: 48px;
+  max-width: 860px;
+  padding: 0 28px;
+  box-sizing: border-box;
+  font-size: 1.28rem;
+  line-height: 1.95;
+  font-weight: 700;
+  text-align: justify;
+  text-wrap: pretty;
+}
+.article h2{
+  margin: 40px 0 14px;
+  font-size: 1.55rem;
+}
+.article h3{
+  margin: 24px 0 10px;
+  font-size: 1.2rem;
+}
+.article p{
+  margin: 0 0 30px;
+}
+
+.articleMainText{
+  transition: opacity 220ms ease;
+  will-change: opacity;
+}
+
+.antiEndBlock{
+  margin-top: 36px;
+  margin-bottom: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.antiEndVisual{
+  width: min(100%, 820px);
+  padding: 0 34px;
+  box-sizing: border-box;
+  position: relative;
+  display: grid;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 160ms ease-out;
+  text-decoration: none;
+}
+
+.antiSlide{
+  grid-area: 1 / 1;
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 10px 24px rgba(0,0,0,0.18));
+  opacity: 0;
+}
+
+.antiSlideA{
+  animation: antiGalleryA 7s ease-in-out infinite;
+}
+
+.antiSlideB{
+  animation: antiGalleryB 7s ease-in-out infinite;
+}
+
+.antiEndSubtitle{
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  opacity: 0.68;
+  text-transform: none;
+  text-align: center;
+}
+
+.antiEndSpacer{
+  height: clamp(200px, 32vh, 380px);
+}
+
+@keyframes antiGalleryA{
+  0%, 44%{ opacity: 1; }
+  50%, 94%{ opacity: 0; }
+  100%{ opacity: 1; }
+}
+
+@keyframes antiGalleryB{
+  0%, 44%{ opacity: 0; }
+  50%, 94%{ opacity: 1; }
+  100%{ opacity: 0; }
+}
+
+/* --- Credits cards dock (fixed, center-right) --- */
+.creditsDock{
+  position: fixed;
+  top: 50%;
+  right: 260px; /* moved further left */
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 240ms ease;
+  z-index: 25; /* above fold content */
+  pointer-events: none; /* enabled in JS when visible */
+}
+
+.creditsDockInner{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+@media only screen and (max-width:767px){
+  .creditsDock{
+    right: 24px;
+    z-index: 35;
+  }
+  .creditsDockInner{
+    gap: 8px;
+    transform: scale(0.92);
+    transform-origin: right center;
+  }
+}
+
+.scrollHint{
+  position: fixed;
+  left: 24px;
+  top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  color: #333;
+  opacity: 0;
+  transition: opacity 220ms ease;
+  pointer-events: none;
+  z-index: 20;
+}
+.scrollHint.visible{ opacity: 0.75; }
+.scrollHint.hidden{ opacity: 0; }
+
+.scrollHintArrow{
+  display: block;
+  font-size: 0.9rem;
+  line-height: 1;
+  animation: scrollHintBob 1.6s ease-in-out infinite;
+}
+
+@keyframes scrollHintBob{
+  0%, 100%{
+    transform: translateY(-1px);
+    opacity: 0.7;
+  }
+  50%{
+    transform: translateY(2px);
+    opacity: 1;
+  }
+}
+
+.cornerMark{
+  position: fixed;
+  top: 18px;
+  right: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 30; /* above shader and content */
+}
+
+.cornerMarkWaveCanvas{
+  width: 94px;
+  height: 16px;
+  display: block;
+  opacity: 0.92;
+  text-shadow: none !important;
+}
+
+.cornerMarkLabel{
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #111;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.sideVignette{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 16;
+  opacity: 0;
+  transition: opacity 240ms ease;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0) 18%),
+    linear-gradient(270deg, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0) 18%);
+}
+
+.asciiRainLayer{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 6;
+  opacity: 0;
+  transition: opacity 240ms ease;
+}
+
+.presageWatermark{
+  position: fixed;
+  right: 18px;
+  bottom: 14px;
+  z-index: 19;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.presageWatermark img{
+  width: 200px;
+  height: auto;
+  display: block;
+  filter: brightness(0) saturate(100%);
+}
+
+.mobileMessage{
+  display: none;
+}
+
+.mobileTitle{
+  display: none;
+}
+
+.mobileLocation,
+.mobileYear,
+.mobileWaveCanvas{
+  display: none;
+}
+
+/* --- Threads background (center band, fades in on scroll) --- */
+.threadsOverlay{
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 220ms ease;
+  z-index: 4;
+}
+
+.threadsOverlay, .threadsOverlay *{
+  pointer-events: none;
+  text-shadow: none !important;
+}
+
+.threadsFrame{
+  width: 100vw;
+  height: min(520px, 55vh);
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  border-radius: 0;
+}
+
+.threadsFrame::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(#fff0 0%, #ffffff8c 70%, #fffc 100%);
+}
+
+/* ===== MOBILE/VERTICAL LAYOUT (max-width: 768px) ===== */
+@media only screen and (max-width: 768px){
+  body{
+    padding: 0 !important;
+    font-size: 0.96rem !important;
+    overflow-x: hidden !important;
+    background: #ffffff !important;
+    color: #111 !important;
+    margin: 0;
+  }
+
+  /* Hide everything except what we want */
+  .wrapper3d,
+  .fold,
+  .hero,
+  .article,
+  .creditsDock,
+  .creditsDockInner,
+  .cornerMark,
+  .cornerMarkWaveCanvas,
+  .cornerMarkLabel,
+  .scrollHint,
+  .customCursor,
+  .antiEndBlock,
+  .antiEndVisual,
+  .antiSlide,
+  .antiEndSpacer,
+  .sideVignette,
+  .threadsFrame,
+  .threadsFrame::after{
+    display: none !important;
+  }
+
+  /* Show ASCII rain background */
+  .asciiRainLayer{
+    opacity: 0.8 !important;
+    position: fixed !important;
+    z-index: 1 !important;
+    display: block !important;
+  }
+
+  /* Center watermark SVG */
+  .presageWatermark{
+    position: fixed !important;
+    top: 40.5% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    right: auto !important;
+    bottom: auto !important;
+    z-index: 2 !important;
+    opacity: 1 !important;
+    pointer-events: none !important;
+  }
+
+  .presageWatermark img{
+    width: 220px !important;
+    height: auto !important;
+    display: block !important;
+    filter: brightness(0) saturate(100%) !important;
+  }
+
+  /* Mobile message text */
+  .mobileMessage{
+    display: block !important;
+    position: fixed !important;
+    bottom: 14% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 3 !important;
+    color: #111 !important;
+    font-size: 1rem !important;
+    text-align: center !important;
+    padding: 15px 25px !important;
+    max-width: 80% !important;
+    line-height: 1.4 !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    backdrop-filter: none !important;
+    font-family: 'Courier New', monospace !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  .mobileTitle{
+    display: block !important;
+    position: fixed !important;
+    top: 16.5% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 3 !important;
+    color: #111 !important;
+    font-family: "Antipublic Helvetica", Helvetica, Arial, sans-serif !important;
+    font-weight: 700 !important;
+    font-size: clamp(2.15rem, 10vw, 3.2rem) !important;
+    line-height: 1 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.015em !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    pointer-events: none !important;
+  }
+
+  .mobileLocation{
+    display: block !important;
+    position: fixed !important;
+    top: 53% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 3 !important;
+    color: #111 !important;
+    font-family: "Antipublic Helvetica", Helvetica, Arial, sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 0.88rem !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    pointer-events: none !important;
+  }
+
+  .mobileYear{
+    display: block !important;
+    position: fixed !important;
+    top: 56.4% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 3 !important;
+    color: #111 !important;
+    font-family: "Antipublic Helvetica", Helvetica, Arial, sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 0.95rem !important;
+    letter-spacing: 0.16em !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    pointer-events: none !important;
+  }
+
+  .mobileWaveCanvas{
+    display: block !important;
+    position: fixed !important;
+    left: 50% !important;
+    top: 47% !important;
+    transform: translateX(-50%) !important;
+    width: 132px !important;
+    height: 22px !important;
+    z-index: 3 !important;
+    opacity: 0.9 !important;
+    pointer-events: none !important;
+  }
+
+  /* Keep audio playing on mobile */
+  audio{
+    display: block !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 1px !important;
+    height: 1px !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+}
+
+.threadsFrame{
+  width: 100vw;
+  height: min(520px, 55vh);
+  position: relative;
+  border-radius: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+.threadsFrame::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 70%, rgba(255,255,255,0.8) 100%);
+}
+
+@media only screen and (max-width:767px){
+  body{font-size: .96rem}
+  .hero{height:40vh}
+  .fold{ height:80vh }
+  .foldBottom{ transform:rotateX(140deg) }
+  .foldTop{ transform:rotateX(-140deg) }
+  .article{font-size: 1.08rem; line-height: 1.72; max-width: 94vw}
+  .threadsFrame{ width: 100vw; height: 46vh; border-radius: 0; }
+}
+
+/* Print should render content normally (no 3D folds) */
+@media print{
+  .all{
+    align-items:normal;
+    display:block;
+    height:auto;
+    justify-content:normal;
+    position:static;
+    width:auto;
+  }
+  .wrapper3d{ perspective:none; transform:none }
+  .foldTop,.foldBottom{ display:none }
+  .fold{ height:auto; overflow:visible; width:auto }
+  [data-fold-content="true"]{ transform:none !important }
+}
