@@ -8,18 +8,14 @@ const STATIC_CACHE_URLS = [
   './presage.svg'
 ];
 
-// Audio lazy-loaded on demand, cache first 2 tracks for better UX
-const PRIORITY_AUDIO_CACHE = [
-  './audio1.mp3',
-  './audio2.mp3'
+const AUDIO_FILES = [
+  'audio1.mp3', 'audio2.mp3', 'audio3.mp3',
+  'audio4.mp3', 'audio5.mp3', 'audio6.mp3',
+  'audio7.mp3', 'audio8.mp3', 'audio9.mp3',
+  'audio10.mp3', 'audio11.mp3', 'audio12.mp3'
 ];
 
-// All audio files for lazy caching
-const ALL_AUDIO_FILES = [
-  './audio1.mp3', './audio2.mp3', './audio3.mp3', 
-  './audio4.mp3', './audio5.mp3', './audio6.mp3',
-  './audio7.mp3', './audio8.mp3', './audio9.mp3'
-];
+const isAudioRequest = (pathname) => AUDIO_FILES.some((fileName) => pathname.endsWith('/' + fileName));
 
 // Install event - cache static assets immediately
 self.addEventListener('install', event => {
@@ -51,45 +47,40 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
-  
+
   // Handle audio files with mobile-optimized caching strategy
-  if (ALL_AUDIO_FILES.some(audioUrl => url.pathname === audioUrl)) {
+  if (isAudioRequest(url.pathname)) {
     event.respondWith(
       caches.match(request)
         .then(response => {
           if (response) {
             return response;
           }
-          // Cache audio files on first request, with range request support for mobile
+
           return fetch(request)
             .then(response => {
-              // Only cache successful responses
               if (response.status === 200) {
                 const responseClone = response.clone();
                 caches.open(CACHE_NAME)
                   .then(cache => cache.put(request, responseClone))
-                  .catch(() => {}); // Ignore cache errors
+                  .catch(() => {});
               }
               return response;
             })
-            .catch(() => {
-              // Return empty response for offline scenarios
-              return new Response('', { status: 404 });
-            });
+            .catch(() => new Response('', { status: 404 }));
         })
     );
     return;
   }
 
   // Handle other static assets
-  if (request.destination === 'image' || 
-      request.destination === 'script' || 
+  if (request.destination === 'image' ||
+      request.destination === 'script' ||
       request.destination === 'style' ||
       url.pathname.endsWith('.svg')) {
     event.respondWith(
       caches.match(request)
         .then(response => {
-          // Return cached version or fetch from network
           return response || fetch(request)
             .then(response => {
               const responseClone = response.clone();
