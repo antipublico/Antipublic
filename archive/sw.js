@@ -1,24 +1,24 @@
-// Service Worker for mobile-optimized performance
+﻿// Service Worker for mobile-optimized performance
 const CACHE_NAME = 'antipublic-v1.0.1';
 const STATIC_CACHE_URLS = [
-  '/',
-  '/index.html',
-  '/static/js/main.js',
-  '/static/css/main.css',
-  '/presage.svg'
+  './',
+  './index.html',
+  './static/js/main.cd135f96.js',
+  './static/css/main.a46b3db5.css',
+  './presage.svg'
 ];
 
 // Audio lazy-loaded on demand, cache first 2 tracks for better UX
 const PRIORITY_AUDIO_CACHE = [
-  '/audio1.mp3',
-  '/audio2.mp3'
+  './audio1.mp3',
+  './audio2.mp3'
 ];
 
 // All audio files for lazy caching
 const ALL_AUDIO_FILES = [
-  '/audio1.mp3', '/audio2.mp3', '/audio3.mp3', 
-  '/audio4.mp3', '/audio5.mp3', '/audio6.mp3',
-  '/audio7.mp3', '/audio8.mp3', '/audio9.mp3'
+  './audio1.mp3', './audio2.mp3', './audio3.mp3', 
+  './audio4.mp3', './audio5.mp3', './audio6.mp3',
+  './audio7.mp3', './audio8.mp3', './audio9.mp3'
 ];
 
 // Install event - cache static assets immediately
@@ -111,3 +111,4 @@ self.addEventListener('message', event => {
     self.skipWaiting();
   }
 });
+
