@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - Antipublic</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+        background: #ffffff;
+        color: #000000;
+        font-family: "Courier New", monospace;
+      }
+
+      body {
+        display: grid;
+        min-height: 100dvh;
+        place-items: center;
+        overflow: hidden;
+      }
+
+      main {
+        width: min(720px, calc(100vw - 44px));
+        display: grid;
+        justify-items: center;
+        gap: 22px;
+        text-align: center;
+        line-height: 1.45;
+        font-size: 15px;
+      }
+
+      .mobileOnly {
+        display: none;
+      }
+
+      .watermark {
+        width: min(220px, 46vw);
+        height: auto;
+        display: block;
+        filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.28));
+      }
+
+      a {
+        color: #0000ff;
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          overflow: hidden;
+        }
+
+        main {
+          width: min(360px, calc(100vw - 34px));
+          gap: 18px;
+          font-size: 13px;
+        }
+
+        .mobileOnly {
+          display: block;
+          max-width: 310px;
+          margin-bottom: 6px;
+          font-weight: 700;
+        }
+
+        .watermark {
+          width: min(180px, 58vw);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="mobileOnly">Este sitio solo puede ser accedido en un navegador de computadora</p>
+      <p>Para entrar al about us de esta pagina, clickea el</p>
+      <img class="watermark" src="./watermark.svg" alt="Antipublic watermark" />
+      <p>que est&aacute; en la esquina inferior derecha de la pagina principal.</p>
+      <a href="./">Click aqui para ir a la pagina principal.</a>
+    </main>
+  </body>
+</html>
